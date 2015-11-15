@@ -40,16 +40,19 @@ public class MainActivity extends Activity {
                 Toast.LENGTH_SHORT).show();
         new Thread(){
             public void run() {
-                String url = ip+"/WebService/UserValidator";
+                String url = ip+"/WebserviceRestaurante/UserValidator";
+
                 WebService ws = new WebService(url);
                 Map params = new HashMap();
 
                 params.put("usuario", usuario.getText().toString());
+                params.put("senha", senha.getText().toString());
 
                 String response = ws.webGet("", params);
 
 
                 try{
+
                     JSONObject json = new JSONObject(response);
                     String out = json.getString("message").toString();
 
@@ -75,11 +78,18 @@ public class MainActivity extends Activity {
         @Override
         public void handleMessage(Message msg){
             //TextView t = (TextView)findViewById(R.id.textViewStatus);
-            String out = (String)msg.getData().getString("message");
+            String out = "";
+            if( msg != null ) {
+                out = (String) msg.getData().getString("message");
+            }else
+            {
+                tostando("Nao foi possivel se conectar com o Banco de Dados");
+            }
             tostando(out);
             if("Login Correto".equals(out)){
                 iniciaDashboard();
             }
+
             //t.setText("Mensagem: " + out);
         };
     };
