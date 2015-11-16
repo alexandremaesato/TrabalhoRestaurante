@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends Activity {
-    String ip ="http://192.168.1.8:8080";
+    String ip ="http://192.168.25.8:8080";
     EditText usuario;
     EditText senha;
     @Override
