@@ -17,7 +17,7 @@ public class PagamentoAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         return 0;
-        
+
     }
 
     @Override
