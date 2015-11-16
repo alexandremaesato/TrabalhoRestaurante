@@ -22,6 +22,10 @@
             android:name=".Dashboard"
             android:label="@string/title_activity_dashboard" >
         </activity>
+        <activity
+            android:name=".Pagamento"
+            android:label="@string/title_activity_pagamento" >
+        </activity>
     </application>
 
 </manifest>

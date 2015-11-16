@@ -1,6 +1,7 @@
 package com.example.alexandre.trabalhorestaurante;
 
 /**
+
  * Created by Guilherme on 15/11/2015.
  */
 public class Produto {
@@ -41,4 +42,5 @@ public class Produto {
     public void setFoto(String foto) {
         this.foto = foto;
     }
+
 }

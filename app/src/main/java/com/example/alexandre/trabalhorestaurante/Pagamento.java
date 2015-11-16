@@ -1,24 +1,28 @@
 package com.example.alexandre.trabalhorestaurante;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-public class Dashboard extends Activity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Pagamento extends Activity {
+
+    private List<Produto> artigos = new ArrayList<Produto>();
+    private PagamentoAdapter pagamentoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.activity_pagamento);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_dashboard, menu);
+        getMenuInflater().inflate(R.menu.menu_pagamento, menu);
         return true;
     }
 
@@ -35,9 +39,5 @@ public class Dashboard extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void pagamento(View view){
-        startActivity(new Intent(this, Pagamento.class));
     }
 }
