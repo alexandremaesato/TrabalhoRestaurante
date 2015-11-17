@@ -9,17 +9,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends Activity {
-    String ip ="http://192.168.25.8:8080";
+
     EditText usuario;
     EditText senha;
     @Override
@@ -40,9 +37,9 @@ public class MainActivity extends Activity {
                 Toast.LENGTH_SHORT).show();
         new Thread(){
             public void run() {
-                String url = ip+"/WebserviceRestaurante/UserValidator";
 
-                WebService ws = new WebService(url);
+                Url url = new Url();
+                WebService ws = new WebService(url.getUrl());
                 Map params = new HashMap();
 
                 params.put("usuario", usuario.getText().toString());
