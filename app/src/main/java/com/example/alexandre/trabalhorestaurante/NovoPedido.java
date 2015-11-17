@@ -1,7 +1,12 @@
 package com.example.alexandre.trabalhorestaurante;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,28 +14,42 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class NovoPedido extends Activity {
 
     ListView list;
-    String[] nome_produto = {};
-    Integer[] foto_produto = {};
-    Integer[] valor_produto = {};
+    String[] nomeProduto;
+    Integer[] valorProduto;
+    Integer[] imageProduto;
+    List<Produto> produtos = new ArrayList<Produto>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_pedido);
 
-        ListCell adapter = new ListCell(NovoPedido.this, nome_produto, foto_produto, valor_produto);
+// DOING
+// Pegar produto no banco de dados criar um laço para setar cada atributo em um array
+        Url url = new Url();
+        WebService ws = new WebService(url.getUrl());
+        Map params = new HashMap();
+
+        ListCell adapter = new ListCell(NovoPedido.this, nomeProduto, imageProduto, valorProduto);
         list = (ListView)findViewById(R.id.list);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                Toast.makeText(NovoPedido.this, "Clicou na " + nome_produto[+arg2],
+                Toast.makeText(NovoPedido.this, "Clicou na " + nomeProduto[+arg2],
                         Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     @Override
