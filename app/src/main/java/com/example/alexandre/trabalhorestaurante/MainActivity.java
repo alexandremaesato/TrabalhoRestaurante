@@ -44,6 +44,7 @@ public class MainActivity extends Activity {
 
                 params.put("usuario", usuario.getText().toString());
                 params.put("senha", senha.getText().toString());
+                params.put("opcao", "login");
 
                 String response = ws.webGet("", params);
 

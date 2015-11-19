@@ -6,13 +6,27 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 public class Dashboard extends Activity {
+
+    Button btnNovoPedido;
+    Button btnPagamento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        btnNovoPedido = (Button)findViewById(R.id.bNovoPedido);
+        btnNovoPedido.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(Dashboard.this, NovoPedido.class);
+                startActivity(it);
+            }
+        });
     }
 
     @Override
