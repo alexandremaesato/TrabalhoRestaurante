@@ -9,9 +9,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +22,7 @@ public class MainActivity extends Activity {
 
     EditText usuario;
     EditText senha;
+    Usuario modelusuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +55,16 @@ public class MainActivity extends Activity {
                 try{
 
                     JSONObject json = new JSONObject(response);
-                    String out = json.getString("message").toString();
-
+                    JSONObject jsonUsuario = new JSONObject(json.getString("usuario")); //Pega o Json e faz um load apenas dos dados do Usuario em um novo Json
+                    Usuario u = new Usuario();
+                    u.jsonToUsuario(jsonUsuario); //Converte o json em usuario
                     Bundle b = new Bundle();
-                    b.putString("message", out);
+
+                    if(u != null){
+                        b.putString("id", String.valueOf(u.getIdUsuario()));
+                        b.putString("nome", u.getNome());
+                    }else
+                        b.putString("message", "Algo deu errado!!!");
 
                     Message msg = new Message();
                     msg.setData(b);
@@ -75,29 +85,37 @@ public class MainActivity extends Activity {
         @Override
         public void handleMessage(Message msg){
             //TextView t = (TextView)findViewById(R.id.textViewStatus);
-            String out = "";
+
             if( msg != null ) {
-                out = (String) msg.getData().getString("message");
+                String idUsuario = (String) msg.getData().getString("id");
+                String nome = (String) msg.getData().getString("nome");
+                tostando(idUsuario);
+                iniciaDashboard(idUsuario,nome);
             }else
             {
                 tostando("Nao foi possivel se conectar com o Banco de Dados");
             }
-            tostando(out);
-            if("Login Correto".equals(out)){
-                iniciaDashboard();
-            }
+            //tostando(idUsuario);
+//            if("Login Correto".){
+//
+//            }
 
             //t.setText("Mensagem: " + out);
         };
     };
 
-    public void iniciaDashboard() {
+    public void iniciaDashboard(String id, String nome) {
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        startActivity(new Intent(this, Dashboard.class));
+        Intent intent = new Intent(this, Dashboard.class);
+        Bundle params = new Bundle();
+        params.putString("id", id);
+        params.putString("nome", nome);
+        intent.putExtras(params);
+        startActivity(intent);
     }
 
     @Override

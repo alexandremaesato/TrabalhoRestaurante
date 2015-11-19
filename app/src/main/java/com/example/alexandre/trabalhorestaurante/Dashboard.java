@@ -6,13 +6,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 public class Dashboard extends Activity {
-
+    TextView tvLogin;
+    Long id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        tvLogin =(TextView)findViewById(R.id.tvLogin);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            Bundle parametros = intent.getExtras();
+            tvLogin.setText("Cliente: "+ parametros.getString("nome"));
+            id = Long.parseLong(parametros.getString("id"));
+        }
     }
 
     @Override
