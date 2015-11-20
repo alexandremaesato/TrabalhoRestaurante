@@ -7,16 +7,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class Dashboard extends Activity {
-
+    TextView tvLogin;
+    String id;
+    String nome;
     Button btnNovoPedido;
-    Button btnPagamento;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        tvLogin =(TextView)findViewById(R.id.tvLogin);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            Bundle parametros = intent.getExtras();
+            tvLogin.setText("Cliente: "+ parametros.getString("nome"));
+            id = parametros.getString("id");
+            nome = parametros.getString("nome");
+        }
 
         btnNovoPedido = (Button)findViewById(R.id.bNovoPedido);
         btnNovoPedido.setOnClickListener(new Button.OnClickListener() {
@@ -24,6 +35,10 @@ public class Dashboard extends Activity {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(Dashboard.this, EfetuarPedido.class);
+                Bundle params = new Bundle();
+                params.putString("id",id);
+                params.putString("nome",nome);
+                it.putExtras(params);
                 startActivity(it);
             }
         });
@@ -52,6 +67,11 @@ public class Dashboard extends Activity {
     }
 
     public void pagamento(View view){
-        startActivity(new Intent(this, Pagamento.class));
+        Intent intent =  new Intent(this, Pagamento.class);
+        Bundle params = new Bundle();
+        params.putString("id",id);
+        params.putString("nome",nome);
+        intent.putExtras(params);
+        startActivity(intent);
     }
 }

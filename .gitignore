@@ -71,3 +71,10 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Android Studio
+*.iml
+.idea
+#.idea/workspace.xml - remove # and delete .idea if it better  suit your needs.
+.gradle
+build/
