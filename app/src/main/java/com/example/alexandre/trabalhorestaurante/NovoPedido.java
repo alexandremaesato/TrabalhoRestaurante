@@ -1,20 +1,17 @@
 package com.example.alexandre.trabalhorestaurante;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Base64;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.io.ByteArrayOutputStream;
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +36,51 @@ public class NovoPedido extends Activity {
         WebService ws = new WebService(url.getUrl());
         Map params = new HashMap();
 
+        params.put("opcao", "listaProdutos");
+
+        String response = ws.webGet("", params);
+
+        try{
+
+            JSONObject json = new JSONObject(response);
+            String out = json.getString("message").toString();
+
+            Bundle b = new Bundle();
+            b.putString("message", out);
+
+            Message msg = new Message();
+            msg.setData(b);
+
+            //handler.sendMessage(msg);
+            handler.sendMessageAtTime(msg, 3000);
+
+
+        }catch (JSONException e1){
+            e1.printStackTrace();
+        }
+
+    };
+
+    public void tostando(String msg){
+        Toast.makeText(this, msg,
+                Toast.LENGTH_SHORT).show();
+    }
+
+    public Handler handler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg){
+            //TextView t = (TextView)findViewById(R.id.textViewStatus);
+            String out = "";
+            if( msg != null ) {
+                out = (String) msg.getData().getString("produtos");
+            }
+            tostando(out);
+
+        };
+    };
+
+    public void produtosList(){
         ListCell adapter = new ListCell(NovoPedido.this, nomeProduto, imageProduto, valorProduto);
         list = (ListView)findViewById(R.id.list);
         list.setAdapter(adapter);
@@ -49,7 +91,6 @@ public class NovoPedido extends Activity {
                         Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     @Override
