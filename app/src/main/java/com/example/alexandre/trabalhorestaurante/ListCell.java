@@ -2,6 +2,7 @@ package com.example.alexandre.trabalhorestaurante;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,10 @@ public class ListCell extends ArrayAdapter<String> {
 
     private final Activity context;
     private final String[] nome_produto;
-    private final Integer[] imagem_produto;
-    private final Integer[] valor_produto;
+    private final Bitmap[] imagem_produto;
+    private final Double[] valor_produto;
 
-    public ListCell(Activity context, String[] nome_produto, Integer[] imagem_produto, Integer[] valor_produto) {
+    public ListCell(Activity context, String[] nome_produto, Bitmap[] imagem_produto, Double[] valor_produto) {
         super(context, R.layout.list_cell, nome_produto);
         this.context = context;
         this.nome_produto = nome_produto;
@@ -35,8 +36,8 @@ public class ListCell extends ArrayAdapter<String> {
         TextView txtValor = (TextView)rowView.findViewById(R.id.txtValor);
         ImageView imageView = (ImageView)rowView.findViewById(R.id.img);
         txtNome.setText(nome_produto[position]);
-        txtValor.setText(valor_produto[position]);
-        imageView.setImageResource(imagem_produto[position]);
+        txtValor.setText(String.valueOf(valor_produto[position]));
+        imageView.setImageBitmap(imagem_produto[position]);
         return rowView;
     }
 }

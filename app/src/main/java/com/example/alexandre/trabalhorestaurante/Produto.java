@@ -17,7 +17,7 @@ public class Produto {
     private int produtoid;
     private String nome;
     private Double valor;
-    private Integer foto;
+    private String imagem;
 
     public int getProdutoid() {
         return produtoid;
@@ -43,12 +43,12 @@ public class Produto {
         this.valor = valor;
     }
 
-    public Integer getFoto() {
-        return foto;
+    public String getImagem() {
+        return imagem;
     }
 
-    public void setFoto(Integer foto) {
-        this.foto = foto;
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 
     public String imagemEncode(Bitmap imagemProduto){

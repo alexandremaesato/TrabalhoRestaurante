@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
                 try{
 
                     JSONObject json = new JSONObject(response);
-                    String out = json.getString("message").toString();
+                    String out = json.getString("usuario").toString();
 
                     Bundle b = new Bundle();
                     b.putString("message", out);
@@ -60,8 +60,8 @@ public class MainActivity extends Activity {
                     Message msg = new Message();
                     msg.setData(b);
 
-                    //handler.sendMessage(msg);
-                    handler.sendMessageAtTime(msg, 3000);
+//                    handler.sendMessage(msg);
+                    handler.sendMessageAtTime(msg,3000);
 
 
                 }catch (JSONException e1){
@@ -75,20 +75,11 @@ public class MainActivity extends Activity {
 
         @Override
         public void handleMessage(Message msg){
-            //TextView t = (TextView)findViewById(R.id.textViewStatus);
-            String out = "";
-            if( msg != null ) {
-                out = (String) msg.getData().getString("message");
-            }else
-            {
+            if( msg == null ) {
                 tostando("Nao foi possivel se conectar com o Banco de Dados");
-            }
-            tostando(out);
-            if("Login Correto".equals(out)){
+            } else{
                 iniciaDashboard();
             }
-
-            //t.setText("Mensagem: " + out);
         };
     };
 

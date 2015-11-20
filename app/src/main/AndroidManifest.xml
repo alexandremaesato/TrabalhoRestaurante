@@ -26,6 +26,10 @@
             android:name=".Pagamento"
             android:label="@string/title_activity_pagamento" >
         </activity>
+        <activity
+            android:name=".EfetuarPedido"
+            android:label="@string/title_activity_efetuar_pedido" >
+        </activity>
     </application>
 
 </manifest>

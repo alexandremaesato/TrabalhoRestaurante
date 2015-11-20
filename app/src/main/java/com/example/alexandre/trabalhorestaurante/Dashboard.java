@@ -23,7 +23,7 @@ public class Dashboard extends Activity {
 
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(Dashboard.this, NovoPedido.class);
+                Intent it = new Intent(Dashboard.this, EfetuarPedido.class);
                 startActivity(it);
             }
         });
