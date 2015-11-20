@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 public class Dashboard extends Activity {
     TextView tvLogin;
-    Long id;
+    String id;
+    String nome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +22,8 @@ public class Dashboard extends Activity {
         if (intent != null) {
             Bundle parametros = intent.getExtras();
             tvLogin.setText("Cliente: "+ parametros.getString("nome"));
-            id = Long.parseLong(parametros.getString("id"));
+            id = parametros.getString("id");
+            nome = parametros.getString("nome");
         }
     }
 
@@ -48,6 +50,11 @@ public class Dashboard extends Activity {
     }
 
     public void pagamento(View view){
-        startActivity(new Intent(this, Pagamento.class));
+        Intent intent =  new Intent(this, Pagamento.class);
+        Bundle params = new Bundle();
+        params.putString("id",id);
+        params.putString("nome",nome);
+        intent.putExtras(params);
+        startActivity(intent);
     }
 }
