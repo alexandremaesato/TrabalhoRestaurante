@@ -72,6 +72,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Arquivos desnecessarios
+Url.java
+
 # Android Studio
 *.iml
 .idea
