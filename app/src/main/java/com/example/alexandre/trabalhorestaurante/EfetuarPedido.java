@@ -1,6 +1,7 @@
 package com.example.alexandre.trabalhorestaurante;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,11 +31,21 @@ public class EfetuarPedido extends Activity {
     String imagem;
     List<Produto> pds;
     Gson gson = new Gson();
+    Usuario usuario = new Usuario();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_efetuar_pedido);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            Bundle parametros = intent.getExtras();
+            String nome = parametros.getString("nome");
+            String id = parametros.getString("id");
+            usuario.setNome(nome);
+            usuario.setIdUsuario(Integer.parseInt(id));
+        }
 
         new Thread() {
             public void run() {
@@ -101,46 +112,66 @@ public class EfetuarPedido extends Activity {
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                        Toast.makeText(EfetuarPedido.this, "Clicou na " + nomeProduto[+arg2],
-                                Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(EfetuarPedido.this, "Clicou na " + nomeProduto[+arg2],
+//                                Toast.LENGTH_SHORT).show();
+
+                        Intent intent =  new Intent(EfetuarPedido.this, ConfirmacaoPedido.class);
+                        Bundle params = new Bundle();
+
+                            Produto prod = new Produto();
+                            prod.setNome(nomeProduto[+arg2]);
+                            prod.setValor(valorProduto[+arg2]);
+                            prod.setImagem(prod.imagemEncode(imagemProduto[+arg2]));
+
+                        params.putString("produto", gson.toJson(prod));
+                        params.putString("usuario", gson.toJson(usuario));
+                        intent.putExtras(params);
+                        startActivity(intent);
                     }
                 });
             }
         };
     };
 
-    public void produtosList(String produtos){
-        ListView list;
-        final String[] nomeProduto = null;
-        Double[] valorProduto = null;
-        Bitmap[] imagemProduto = null;
-        String imagem;
-        Gson gson = new Gson();
-        int i = 0;
+//    public void produtosList(String produtos){
+//        ListView list;
+//        final String[] nomeProduto = null;
+//        Double[] valorProduto = null;
+//        Bitmap[] imagemProduto = null;
+//        String imagem;
+//        Gson gson = new Gson();
+//        int i = 0;
+//
+//        ProdutosList p = gson.fromJson(produtos, ProdutosList.class);
+//        List<Produto> pds = p.getProdutos();
+//
+//        for(Produto pd : pds){
+//            nomeProduto[i] = pd.getNome();
+//            valorProduto[i] = pd.getValor();
+//            imagem = pd.getImagem();
+//            imagemProduto[i] = pd.imagemDecode(imagem);
+//            i++;
+//        }
+//
+//
+//        ListCell adapter = new ListCell(EfetuarPedido.this, nomeProduto, imagemProduto, valorProduto);
+//        list = (ListView)findViewById(R.id.produtosList);
+//        list.setAdapter(adapter);
+//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+//                Toast.makeText(EfetuarPedido.this, "Clicou na " + nomeProduto[+arg2],
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
-        ProdutosList p = gson.fromJson(produtos, ProdutosList.class);
-        List<Produto> pds = p.getProdutos();
-
-        for(Produto pd : pds){
-            nomeProduto[i] = pd.getNome();
-            valorProduto[i] = pd.getValor();
-            imagem = pd.getImagem();
-            imagemProduto[i] = pd.imagemDecode(imagem);
-            i++;
-        }
-
-
-        ListCell adapter = new ListCell(EfetuarPedido.this, nomeProduto, imagemProduto, valorProduto);
-        list = (ListView)findViewById(R.id.produtosList);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                Toast.makeText(EfetuarPedido.this, "Clicou na " + nomeProduto[+arg2],
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+    //                        params.putString("nomeUser",usuario.getNome());
+//                        params.putInt("userid", usuario.getIdUsuario());
+//                        params.putString("nomeproduto", nomeProduto[+arg2]);
+//                        params.putDouble("valorproduto", valorProduto[+arg2]);
+//                        Produto prod = new Produto();
+//                        params.putString("imagemproduto",prod.imagemEncode(imagemProduto[+arg2]));
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

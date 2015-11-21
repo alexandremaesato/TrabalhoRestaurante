@@ -30,6 +30,10 @@
             android:name=".EfetuarPedido"
             android:label="@string/title_activity_efetuar_pedido" >
         </activity>
+        <activity
+            android:name=".ConfirmacaoPedido"
+            android:label="@string/title_activity_confirmacao_pedido" >
+        </activity>
     </application>
 
 </manifest>

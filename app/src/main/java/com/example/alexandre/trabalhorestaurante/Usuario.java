@@ -13,15 +13,15 @@ import java.util.HashMap;
  * Created by alexandre on 16/11/2015.
  */
 public class Usuario {
-    private long idUsuario;
+    private int idUsuario;
     private String nome;
     private String senha;
 
-    public long getIdUsuario() {
+    public int getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(long idUsuario) {
+    public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -43,7 +43,7 @@ public class Usuario {
 
     public Usuario jsonToUsuario(JSONObject json) throws JSONException {
         HashMap map = new HashMap();
-        this.setIdUsuario(json.getLong("idUsuario"));
+        this.setIdUsuario(json.getInt("idUsuario"));
         this.setNome(json.optString("nome"));
         return this;
     }
@@ -57,7 +57,7 @@ public class Usuario {
 
     public Usuario getUsusarioFromParams(Bundle params){
         this.nome = params.getString("nome");
-        this.idUsuario = Long.parseLong(params.getString("nome"));
+        this.idUsuario = Integer.parseInt(params.getString("nome"));
         return this;
     }
 }

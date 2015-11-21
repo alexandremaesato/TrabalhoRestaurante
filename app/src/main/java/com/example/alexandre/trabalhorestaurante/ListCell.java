@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
+
 /**
  * Created by Guilherme on 17/11/2015.
  */
@@ -36,7 +38,7 @@ public class ListCell extends ArrayAdapter<String> {
         TextView txtValor = (TextView)rowView.findViewById(R.id.txtValor);
         ImageView imageView = (ImageView)rowView.findViewById(R.id.img);
         txtNome.setText(nome_produto[position]);
-        txtValor.setText("R$: " + String.valueOf(valor_produto[position]));
+        txtValor.setText("R$ " + String.format("%.02f", valor_produto[position]));
         imageView.setImageBitmap(imagem_produto[position]);
         return rowView;
     }
