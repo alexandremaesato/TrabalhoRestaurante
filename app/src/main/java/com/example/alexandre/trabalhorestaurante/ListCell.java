@@ -36,7 +36,7 @@ public class ListCell extends ArrayAdapter<String> {
         TextView txtValor = (TextView)rowView.findViewById(R.id.txtValor);
         ImageView imageView = (ImageView)rowView.findViewById(R.id.img);
         txtNome.setText(nome_produto[position]);
-        txtValor.setText(String.valueOf(valor_produto[position]));
+        txtValor.setText("R$: " + String.valueOf(valor_produto[position]));
         imageView.setImageBitmap(imagem_produto[position]);
         return rowView;
     }
