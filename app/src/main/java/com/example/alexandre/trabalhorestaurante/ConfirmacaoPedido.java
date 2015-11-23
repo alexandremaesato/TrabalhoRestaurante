@@ -22,7 +22,7 @@ public class ConfirmacaoPedido extends Activity {
             us = extras.getString("usuario");
         }
         Produto produto = new Gson().fromJson(pd, Produto.class);
-        Usuario user = new Gson().fromJson(pd, Usuario.class);
+        Usuario user = new Gson().fromJson(us, Usuario.class);
     }
 
     @Override

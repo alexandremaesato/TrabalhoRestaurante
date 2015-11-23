@@ -10,8 +10,9 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:name=".SplashScreen"
+            android:label="splashScreen"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,8 +20,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".MainActivity"
+            android:label="Resturant" >
+        </activity>
+        <activity
             android:name=".Dashboard"
-            android:label="@string/title_activity_dashboard" >
+            android:label="Resturant" >
         </activity>
         <activity
             android:name=".Pagamento"
@@ -28,11 +33,11 @@
         </activity>
         <activity
             android:name=".EfetuarPedido"
-            android:label="@string/title_activity_efetuar_pedido" >
+            android:label="Escolha de Itens" >
         </activity>
         <activity
             android:name=".ConfirmacaoPedido"
-            android:label="@string/title_activity_confirmacao_pedido" >
+            android:label="Pedido" >
         </activity>
     </application>
 
