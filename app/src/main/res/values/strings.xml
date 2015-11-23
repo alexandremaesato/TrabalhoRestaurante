@@ -7,4 +7,5 @@
     <string name="title_activity_pagamento">Pagamento</string>
     <string name="title_activity_efetuar_pedido">EfetuarPedido</string>
     <string name="title_activity_confirmacao_pedido">ConfirmacaoPedido</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
 </resources>
