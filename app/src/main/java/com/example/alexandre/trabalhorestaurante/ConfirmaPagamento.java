@@ -66,7 +66,7 @@ public class ConfirmaPagamento extends Activity {
             public void run() {
 
                 Url url = new Url();
-                WebService ws = new WebService(url.getUrl());
+                WebService ws = new WebService(url.getUrl()+"/UserValidator");
                 Map params = new HashMap();
 
                 params.put("usuario", usuario);

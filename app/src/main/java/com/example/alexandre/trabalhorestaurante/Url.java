@@ -5,7 +5,7 @@ package com.example.alexandre.trabalhorestaurante;
  */
 public class Url {
 
-    private String url = "http://192.168.25.11:8080/WebserviceRestaurante/UserValidator";
+    private String url = "http://192.168.25.11:8080/WebserviceRestaurante";
 
     public String getUrl() {
         return url;

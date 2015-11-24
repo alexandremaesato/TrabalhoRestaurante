@@ -1,6 +1,7 @@
 package com.example.alexandre.trabalhorestaurante;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,7 +23,6 @@ public class MainActivity extends Activity {
 
     EditText usuario;
     EditText senha;
-    Usuario modelusuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,30 +43,31 @@ public class MainActivity extends Activity {
             public void run() {
 
                 Url url = new Url();
-                WebService ws = new WebService(url.getUrl());
+                WebService ws = new WebService(url.getUrl()+"/UserValidator" );
                 Map params = new HashMap();
 
                 params.put("usuario", usuario.getText().toString());
                 params.put("senha", senha.getText().toString());
                 params.put("opcao", "login");
 
-                String response = ws.webGet("", params);
+
 
 
                 try{
-
+                    String response = ws.webGet("", params);
                     JSONObject json = new JSONObject(response);
 
                     JSONObject jsonUsuario = new JSONObject(json.getString("usuario")); //Pega o Json e faz um load apenas dos dados do Usuario em um novo Json
                     Usuario u = new Usuario();
                     u.jsonToUsuario(jsonUsuario); //Converte o json em usuario
                     Bundle b = new Bundle();
-
+                    //final ProgressDialog mprogressDialog = ProgressDialog.show(MainActivity.this, "Aguarde", "Processando...");
                     if(u != null){
                         b.putString("id", String.valueOf(u.getIdUsuario()));
                         b.putString("nome", u.getNome());
-                    }else
+                    }else {
                         b.putString("message", "Algo deu errado!!!");
+                    }
 
                     Message msg = new Message();
                     msg.setData(b);
@@ -76,7 +77,12 @@ public class MainActivity extends Activity {
 
 
                 }catch (JSONException e1){
-                    e1.printStackTrace();
+                    Message msg = new Message();
+                    Bundle b= new Bundle();
+                    b.putString("msg", "erro");
+                    msg.setData(b);
+                    handler.sendMessageAtTime(msg,3000);
+                    //e1.printStackTrace();
                 }
             }
         }.start();
@@ -87,16 +93,20 @@ public class MainActivity extends Activity {
         @Override
         public void handleMessage(Message msg){
 
+
+
             if( msg != null ) {
-                String idUsuario = (String) msg.getData().getString("id");
-                String nome = (String) msg.getData().getString("nome");
-                tostando(idUsuario);
-                iniciaDashboard(idUsuario,nome);
-            }else
-            {
-                tostando("Nao foi possivel se conectar com o Banco de Dados");
+                String idUsuario = msg.getData().getString("id");
+                String nome = msg.getData().getString("nome");
+                //tostando(idUsuario);
+                if(idUsuario != null) {
+                    iniciaDashboard(idUsuario, nome);
+                }else
+                {
+                    tostando("Usuario ou senha incorreto!");
+                }
             }
-        };
+        }
     };
 
     public void iniciaDashboard(String id, String nome) {

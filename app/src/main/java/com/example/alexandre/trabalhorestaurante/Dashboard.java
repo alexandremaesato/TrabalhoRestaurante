@@ -11,21 +11,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class Dashboard extends Activity {
     TextView tvLogin;
-    String id;
     String nome;
     Button btnNovoPedido;
-//    Button bConfirmaPedido;
-    String iduser;
+    String id;
     Gson gson = new Gson();
     Pedido pd;
 
@@ -43,22 +39,20 @@ public class Dashboard extends Activity {
             tvLogin.setText("Cliente: "+ parametros.getString("nome"));
             id = parametros.getString("id");
             nome = parametros.getString("nome");
-            iduser = parametros.getString("id");
         }
 
         new Thread(){
             public void run() {
             // WEB Service q pega o pedido
                 Url url = new Url();
-                WebService ws1 = new WebService(url.getUrl());
+                WebService ws1 = new WebService(url.getUrl()+"/UserValidator");
                 Map params = new HashMap();
-                params.put("usuarioid", iduser);
+                params.put("usuarioid", id);
                 params.put("opcao", "buscaPedido");
 
                 String response = ws1.webGet("", params);
 
                 try{
-
                     JSONObject json = new JSONObject(response);
                     String out = json.getString("pedido").toString();
                     Bundle b = new Bundle();
@@ -91,21 +85,6 @@ public class Dashboard extends Activity {
                 startActivity(it);
             }
         });
-
-//        bConfirmaPedido = (Button)findViewById(R.id.bConfirmaPedido);
-//        bConfirmaPedido.setOnClickListener(new Button.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                Intent it = new Intent(Dashboard.this, EfetuarPedido.class);
-//                Bundle params = new Bundle();
-//                params.putString("id", id);
-//                params.putString("nome", nome);
-//                params.putString("pedido",String.valueOf(pd.getPedidoid()));
-//                it.putExtras(params);
-//                startActivity(it);
-//            }
-//        });
     }
 
     public Handler handler = new Handler(){
@@ -114,7 +93,6 @@ public class Dashboard extends Activity {
         public void handleMessage(Message msg){
 
             if( msg == null ) {
-//                tostando("OK");
                 tostando("Nao foi possivel se conectar com o Banco de Dados");
             }
         };
