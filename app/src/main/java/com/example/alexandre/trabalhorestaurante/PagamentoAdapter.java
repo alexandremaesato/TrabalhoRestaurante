@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,16 +17,14 @@ import java.util.List;
 public class PagamentoAdapter extends BaseAdapter {
     private List<Produto> produtos;
     private LayoutInflater inflater;
+    private Double total;
 
-    public PagamentoAdapter(Context context, List<Produto> produtos){
-        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public PagamentoAdapter(Context context, List<Produto> produtos,Double total){
+        this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.produtos = produtos;
+        this.total = total;
     }
 
-    public void novosDados(List<Produto> produtos){
-        this.produtos = produtos;
-        notifyDataSetChanged();
-    }
 
     @Override
     public int getCount() {
@@ -47,6 +46,7 @@ public class PagamentoAdapter extends BaseAdapter {
         View v = inflater.inflate(R.layout.item_pedido, null);
         ((TextView)(v.findViewById(R.id.txtNome))).setText(produtos.get(position).getNome());
         ((TextView)(v.findViewById(R.id.txtValor))).setText(produtos.get(position).getValor().toString());
+
         return v;
     }
 }

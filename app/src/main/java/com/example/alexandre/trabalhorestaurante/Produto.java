@@ -19,6 +19,7 @@ public class Produto {
     private Double valor;
     private String imagem;
 
+
     public int getProdutoid() {
         return produtoid;
     }
@@ -50,6 +51,7 @@ public class Produto {
     public void setImagem(String imagem) {
         this.imagem = imagem;
     }
+
 
     public String imagemEncode(Bitmap imagemProduto){
 
