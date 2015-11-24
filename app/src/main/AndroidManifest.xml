@@ -12,7 +12,7 @@
         <activity
             android:name=".SplashScreen"
             android:label="splashScreen"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,8 +36,8 @@
             android:label="Escolha de Itens" >
         </activity>
         <activity
-            android:name=".ConfirmacaoPedido"
-            android:label="Pedido" >
+            android:name=".ConfirmaPagamento"
+            android:label="@string/title_activity_confirma_pagamento" >
         </activity>
     </application>
 

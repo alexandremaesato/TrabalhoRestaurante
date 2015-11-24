@@ -28,10 +28,13 @@ public class EfetuarPedido extends Activity {
     String[] nomeProduto = new String[6];
     Double[] valorProduto = new Double[6];
     Bitmap[] imagemProduto = new Bitmap[6];
+    int[] produtoid = new int[6];
     String imagem;
     List<Produto> pds;
     Gson gson = new Gson();
-    Usuario usuario = new Usuario();
+//    Usuario usuario = new Usuario();
+    String usuarioid;
+    String pedidoid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +44,11 @@ public class EfetuarPedido extends Activity {
         Intent intent = getIntent();
         if (intent != null) {
             Bundle parametros = intent.getExtras();
-            String nome = parametros.getString("nome");
-            String id = parametros.getString("id");
-            usuario.setNome(nome);
-            usuario.setIdUsuario(Integer.parseInt(id));
+//            String nome = parametros.getString("nome");
+            usuarioid = parametros.getString("usuarioid");
+            pedidoid = parametros.getString("pedidoid");
+//            usuario.setNome(nome);
+//            usuario.setIdUsuario(Integer.parseInt(id));
         }
 
         new Thread() {
@@ -102,6 +106,7 @@ public class EfetuarPedido extends Activity {
                     valorProduto[i] = pd.getValor();
                     imagem = pd.getImagem();
                     imagemProduto[i] = pd.imagemDecode(imagem);
+                    produtoid[i] = pd.getProdutoid();
                     i++;
                 }
 
@@ -115,18 +120,22 @@ public class EfetuarPedido extends Activity {
 //                        Toast.makeText(EfetuarPedido.this, "Clicou na " + nomeProduto[+arg2],
 //                                Toast.LENGTH_SHORT).show();
 
-                        Intent intent =  new Intent(EfetuarPedido.this, ConfirmacaoPedido.class);
+                        Intent intent =  new Intent(EfetuarPedido.this, ConfirmaPagamento.class);
                         Bundle params = new Bundle();
 
                             Produto prod = new Produto();
                             prod.setNome(nomeProduto[+arg2]);
                             prod.setValor(valorProduto[+arg2]);
                             prod.setImagem(prod.imagemEncode(imagemProduto[+arg2]));
+                            prod.setProdutoid(produtoid[+arg2]);
 
-                        params.putString("produto", gson.toJson(prod));
-                        params.putString("usuario", gson.toJson(usuario));
+                        params.putString("produtoid", String.valueOf(prod.getProdutoid()));
+                        params.putString("produtonome", prod.getNome());
+                        params.putString("usuarioid", usuarioid);
+                        params.putString("pedidoid", pedidoid);
                         intent.putExtras(params);
                         startActivity(intent);
+                        finish();
                     }
                 });
             }
