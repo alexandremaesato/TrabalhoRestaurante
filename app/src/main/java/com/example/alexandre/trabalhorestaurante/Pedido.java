@@ -1,5 +1,8 @@
 package com.example.alexandre.trabalhorestaurante;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Guilherme on 15/11/2015.
  */
@@ -9,6 +12,7 @@ public class Pedido {
     private int usuarioid;
     private String status;
     private String formapgto;
+    private ArrayList<PedidoProduto> pedidoProdutos;
 
     public int getUsuarioid() {
         return usuarioid;
@@ -41,4 +45,12 @@ public class Pedido {
     public void setFormapgto(String formapgto) {
         this.formapgto = formapgto;
     }
+    public ArrayList<PedidoProduto> getPedidoProdutos() {
+        return pedidoProdutos;
+    }
+
+    public void setPedidoProdutos(ArrayList<PedidoProduto> pedidoProdutos) {
+        this.pedidoProdutos = pedidoProdutos;
+    }
+
 }

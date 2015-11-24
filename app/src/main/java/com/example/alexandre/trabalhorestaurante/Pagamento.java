@@ -30,14 +30,17 @@ import java.util.Map;
 public class Pagamento extends Activity {
 
     Double total = 0.0;
-    private List<Produto> produtos;
+    private ArrayList<Produto> produtos = new ArrayList<Produto>();
     private ListView list;
     private PagamentoAdapter pagamentoAdapter;
     private Long id; // id do Usuario
     TextView tvNome;
     Gson gson = new Gson();
-    String[] nomeProduto = new String[50];
-    Double[] valorProduto = new Double[50];
+    private Pedido p;
+    ArrayList<String> nomeProduto = new ArrayList<String>();
+    ArrayList<Double> valorProduto = new ArrayList<Double>();
+    //String[] nomeProduto = new String[50];
+    //Double[] valorProduto = new Double[50];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +71,17 @@ public class Pagamento extends Activity {
                 String response = ws.webGet("", params);
                 try {
                     JSONObject json = new JSONObject(response);
-                    String out = json.getString("produtos").toString();
+                    String out = json.getString("pedido").toString();
 
-                    ProdutosList p = gson.fromJson(out, ProdutosList.class);
-                    produtos = p.getProdutos();
+                    p = gson.fromJson(out, Pedido.class);
+                    //produtos = p.getProdutos();
+                    int i=0;
+                    for(PedidoProduto pd : p.getPedidoProdutos()){
+                        for(int j=0; j<pd.getQuantidade(); j++) {
+                            produtos.add(pd.getProduto());
+                        }
+                        i++;
+                    }
 
                     Bundle b = new Bundle();
                     b.putString("message", String.valueOf(json));
@@ -99,16 +109,22 @@ public class Pagamento extends Activity {
                 int i = 0;
 
 
-                for(Produto pd : produtos){
-                    nomeProduto[i] = pd.getNome();
-                    valorProduto[i] = pd.getValor();
-                    total = total + pd.getValor();
+                for(PedidoProduto pd : p.getPedidoProdutos()){
+                    for(int j=0; j<p.getPedidoProdutos().get(i).getQuantidade(); j++) {
+                        nomeProduto.add(pd.getProduto().getNome());
+                        valorProduto.add(pd.getProduto().getValor());
+                        total = total + pd.getProduto().getValor();
+                    }
+//                    nomeProduto[i] = pd.getNome();
+//                    valorProduto[i] = pd.getValor();
+//                    total = total + pd.getValor();
                     i++;
                 }
 
-                if(produtos.size() > 0){
 
-                    pagamentoAdapter = new PagamentoAdapter(Pagamento.this ,produtos,total);
+                if(p.getPedidoProdutos().size() > 0){
+
+                    pagamentoAdapter = new PagamentoAdapter(Pagamento.this ,p.getPedidoProdutos(),total);
                     list.setAdapter(pagamentoAdapter);
                     list = (ListView)findViewById(R.id.produtosList);
                     ((TextView)(findViewById(R.id.tvTotal))).setText("Total: R$ " + String.format("%.2f",total));

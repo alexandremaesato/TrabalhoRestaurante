@@ -3,12 +3,13 @@ package com.example.alexandre.trabalhorestaurante;
 /**
  * Created by Guilherme on 15/11/2015.
  */
-public class Pedido_Produto {
+public class PedidoProduto {
 
     private int pedido_produto_id;
     private int pedidoid;
     private int produtoid;
     private int quantidade;
+    private Produto produto;
 
     public int getPedido_produto_id() {
         return pedido_produto_id;
@@ -40,5 +41,13 @@ public class Pedido_Produto {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 }

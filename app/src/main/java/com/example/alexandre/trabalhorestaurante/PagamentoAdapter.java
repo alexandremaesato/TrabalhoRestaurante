@@ -15,13 +15,21 @@ import java.util.List;
  * Created by alexandre on 15/11/2015.
  */
 public class PagamentoAdapter extends BaseAdapter {
-    private List<Produto> produtos;
+    private ArrayList<PedidoProduto> pedidoProdutos;
+    private ArrayList<Produto> produtos = new ArrayList<Produto>();
     private LayoutInflater inflater;
     private Double total;
 
-    public PagamentoAdapter(Context context, List<Produto> produtos,Double total){
+    public PagamentoAdapter(Context context, ArrayList<PedidoProduto> pedidoProdutos,Double total){
         this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.produtos = produtos;
+        this.pedidoProdutos = pedidoProdutos;
+        int i=0;
+        for(PedidoProduto pd : pedidoProdutos){
+            for(int j=0; j<pd.getQuantidade(); j++) {
+                produtos.add(pd.getProduto());
+            }
+            i++;
+        }
         this.total = total;
     }
 
@@ -42,8 +50,9 @@ public class PagamentoAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position,View arg1, ViewGroup arg2){
+    public View getView(final int position,View arg1, ViewGroup arg2) {
         View v = inflater.inflate(R.layout.item_pedido, null);
+
         ((TextView)(v.findViewById(R.id.txtNome))).setText(produtos.get(position).getNome());
         ((TextView)(v.findViewById(R.id.txtValor))).setText(produtos.get(position).getValor().toString());
 
