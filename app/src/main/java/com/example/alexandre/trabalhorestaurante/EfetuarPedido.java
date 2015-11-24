@@ -51,6 +51,7 @@ public class EfetuarPedido extends Activity {
                 Map params = new HashMap();
 
                 params.put("opcao", "listaProdutos");
+                params.put("pedidoid", pedidoid);
 
                 String response = ws.webGet("", params);
 
